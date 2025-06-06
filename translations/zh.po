@@ -102,7 +102,31 @@ msgstr "基本的 for 循环练习"
 
 #. https://futurecoder.io/course/#BasicTerminology
 msgid "pages.BasicTerminology.steps.final_text.text"
-msgstr "这里有一些你需要知道的词："
+msgstr ""
+"这里有一些你需要知道的词：\n"
+"\n"
+"***表达式*** 是一段有值的代码。例如，在这行代码中：\n"
+"\n"
+"    __no_auto_translate__\n"
+"    sentence = 'Hello ' + name\n"
+"\n"
+"有三个表达式：\n"
+"\n"
+"1. `'Hello '`\n"
+"2. `name`\n"
+"3. `'Hello ' + name`\n"
+"\n"
+"相比之下，完整的行 `sentence = ...` 是一个 ***语句***。它是一个命令，告诉计算机执行一个动作。它本身没有值。这意味着，例如，你不能将语句相加。这段代码是无效的：\n"
+"\n"
+"    (word = 'Hello') + (name = 'Bob')\n"
+"\n"
+"具体来说，像 `sentence = ...` 这样给变量赋值的语句叫做 ***赋值*** - 值被 *赋给* 变量。\n"
+"\n"
+"程序是按顺序执行的语句列表。`for` 循环是一个 *复合语句*，意思是它有自己的主体，包含其他语句。大多数语句也会包含表达式，表达式可以包含其他更小的表达式，但表达式不能包含语句。\n"
+"\n"
+"计算表达式值的过程叫做 ***求值*** - 注意它几乎包含了 'value'（值）这个词。计算机 *求值* `1 + 2` 得到值 `3`。\n"
+"\n"
+"执行循环的过程叫做 ***迭代***。像 `for char in 'Hello':` 这样的代码是在 *迭代* 字符串 `'Hello'`。这种可能性意味着字符串是 *可迭代的*。相比之下，数字不可迭代，如果你尝试 `for char in 3:`，Python 会告诉你这一点。循环的每次运行是 *一次迭代*，所以在这个例子中会有 5 次迭代。"
 
 #. https://futurecoder.io/course/#BasicTerminology
 msgid "pages.BasicTerminology.title"
@@ -2651,7 +2675,38 @@ msgstr "介绍`elif`"
 
 #. https://futurecoder.io/course/#IntroducingForLoops
 msgid "pages.IntroducingForLoops.steps.final_text.text"
-msgstr "你可以像正常英语一样阅读代码："
+msgstr ""
+"你可以像正常英语一样阅读代码：\n"
+"\n"
+"> 对于字符串 `name` 中的每个字符，打印该字符。\n"
+"\n"
+"每个字符都只是一个普通的字符串。`character` 是一个普通变量，在 `:` 后面的代码运行之前被赋予一个新值。所以上面的代码等价于：\n"
+"\n"
+"    __no_auto_translate__\n"
+"    name = 'World'\n"
+"\n"
+"    character = 'W'\n"
+"    print(character)\n"
+"\n"
+"    character = 'o'\n"
+"    print(character)\n"
+"\n"
+"    character = 'r'\n"
+"    print(character)\n"
+"\n"
+"    character = 'l'\n"
+"    print(character)\n"
+"\n"
+"    character = 'd'\n"
+"    print(character)\n"
+"\n"
+"注意我们可以使用不同的变量名，`character` 只是让它更清楚。\n"
+"\n"
+"for 循环通常遵循这个结构：\n"
+"\n"
+"    for <variable> in <collection>: <code to repeat>\n"
+"\n"
+"`for`、`in` 和 `:` 都是必需的。"
 
 #. https://futurecoder.io/course/#IntroducingForLoops
 msgid "pages.IntroducingForLoops.steps.first_for_loop.text"
@@ -10512,7 +10567,7 @@ msgstr "'你'"
 #.     Hello
 #.     Hello
 msgid "code_bits.Hello"
-msgstr "你好"
+msgstr "Hello"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.keys_are_iterable.text
 #.     __program_indented__
@@ -10661,7 +10716,7 @@ msgstr "__program_indented__"
 #.         else:
 #.             print(f"Error! {repr(actual)} != {repr(expected)}")
 msgid "code_bits.actual"
-msgstr "实际"
+msgstr "actual"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.basic_f_string_exercise
 #. name = "Alice"
@@ -10673,7 +10728,7 @@ msgstr "实际"
 #. age = 20
 #. print("Hello " + name + ". You are " + age + " years old.")
 msgid "code_bits.age"
-msgstr "年龄"
+msgstr "age"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.alert_exercise
 #. def surround(string, sides):
@@ -10691,7 +10746,7 @@ msgstr "年龄"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.alert_exercise.text
 #.     def alert(string, level):
 msgid "code_bits.alert"
-msgstr "警报"
+msgstr "alert"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningAndAndOr.steps.final_text.text
 #.         diagonal1 = all_equal([board[0][0], board[1][1], board[2][2]])
@@ -10739,7 +10794,7 @@ msgstr "警报"
 #.             return True
 #.     return False
 msgid "code_bits.all_equal"
-msgstr "全部相等"
+msgstr "all_equal"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.diagonal_winner
 #. def diagonal_winner(board):
@@ -10783,7 +10838,7 @@ msgstr "all_equal2"
 #. print(small_numbers)
 #. print(big_numbers)
 msgid "code_bits.all_numbers"
-msgstr "所有数字"
+msgstr "all_numbers"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningAndAndOr.steps.AndHasHigherPriority.text
 #.     def diagonal_winner(board):
@@ -11245,7 +11300,7 @@ msgstr "所有数字"
 #.         500000010,
 #.     )
 msgid "code_bits.assert_equal"
-msgstr "断言相等"
+msgstr "assert_equal"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingNewLists.steps.filter_numbers
 #. numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5]
@@ -11283,7 +11338,7 @@ msgstr "断言相等"
 #. print(small_numbers)
 #. print(big_numbers)
 msgid "code_bits.big_numbers"
-msgstr "大数字"
+msgstr "big_numbers"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningAndAndOr.steps.AndHasHigherPriority
 #. def diagonal_winner(board):
@@ -11929,7 +11984,7 @@ msgstr "大数字"
 #.         ' 123\n1XOX\n2O  \n3 XO'
 #.     )
 msgid "code_bits.board"
-msgstr "板"
+msgstr "board"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -12023,7 +12078,7 @@ msgstr "板"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.board_size"
-msgstr "板大小"
+msgstr "board_size"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.crack_password_exercise
 #. letters = 'AB'
@@ -12114,7 +12169,7 @@ msgstr "c4"
 #.         500000010,
 #.     )
 msgid "code_bits.cart"
-msgstr "购物车"
+msgstr "cart"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingUpStrings.steps.name_triangle
 #. name = 'World'
@@ -12394,7 +12449,7 @@ msgstr "购物车"
 #. expected = 'TCATCGCAGGAATCAATGTCCTACCGAATA'
 #. assert_equal(substitute(original), expected)
 msgid "code_bits.char"
-msgstr "字符"
+msgstr "char"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPositionExercises.steps.zip_exercise
 #. string1 = 'Hello'
@@ -12512,7 +12567,7 @@ msgstr "char2"
 #. name = 'World'
 #. for character in name: print(character)
 msgid "code_bits.character"
-msgstr "字符"
+msgstr "character"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.column_winner
 #. def column_winner(board):
@@ -12720,7 +12775,7 @@ msgstr "字符"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.col"
-msgstr "列"
+msgstr "col"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.winner
 #. def winning_line(strings):
@@ -12817,7 +12872,7 @@ msgstr "列"
 #.         True
 #.     )
 msgid "code_bits.column"
-msgstr "列"
+msgstr "column"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.column_winner
 #. def column_winner(board):
@@ -13072,7 +13127,7 @@ msgstr "column_winner"
 #.     else:
 #.         return value2
 msgid "code_bits.condition"
-msgstr "条件"
+msgstr "condition"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingIfStatements.steps.excited_confused_exercise
 #. sentence = 'Hello'
@@ -13089,7 +13144,7 @@ msgstr "条件"
 #.     excited = False
 #.     confused = True
 msgid "code_bits.confused"
-msgstr "困惑"
+msgstr "confused"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingBirdseye.steps.birdseye_loop_example
 #. word = 'Amazing'
@@ -13103,7 +13158,7 @@ msgstr "困惑"
 #. print(vowels)
 #. print(consonants)
 msgid "code_bits.consonants"
-msgstr "辅音"
+msgstr "consonants"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MakingTheBoard.steps.final_text.text
 #.     def make_board(size):
@@ -13130,7 +13185,7 @@ msgstr "辅音"
 #.         print(cube[0][0] is cube[1][0])
 #.     test()
 msgid "code_bits.cube"
-msgstr "立方体"
+msgstr "cube"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningAndAndOr.steps.final_text.text
 #.         diagonal1 = all_equal([board[0][0], board[1][1], board[2][2]])
@@ -13734,7 +13789,7 @@ msgstr "dna"
 #. assert_equal(double(2), 4)
 #. assert_equal(double(5), 10)
 msgid "code_bits.double"
-msgstr "双倍"
+msgstr "double"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MoreOnReturn.steps.cannot_return_multiple_values
 #. def double_numbers(numbers):
@@ -13768,7 +13823,7 @@ msgstr "doubles"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingNewLists.steps.filter_numbers.text
 #.     some_list.append(element)
 msgid "code_bits.element"
-msgstr "元素"
+msgstr "element"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.intro_row_winner
 #. def row_winner(board):
@@ -13878,7 +13933,7 @@ msgstr "元素"
 #.         True
 #.     )
 msgid "code_bits.entry"
-msgstr "条目"
+msgstr "entry"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningCompoundStatements.steps.final_text.text
 #.     sentence = 'Hello World'
@@ -13974,7 +14029,7 @@ msgstr "条目"
 #.     sentence += '!'
 #. print(sentence)
 msgid "code_bits.excited"
-msgstr "兴奋"
+msgstr "excited"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.introducing_assert_equal.text
 #.     def assert_equal(actual, expected):
@@ -14009,7 +14064,7 @@ msgstr "兴奋"
 #.     assert_equal(substitute(original, {'A': 'T', 'T': 'A', 'C': 'G', 'G':
 #. 'C'}), expected)
 msgid "code_bits.expected"
-msgstr "预期"
+msgstr "expected"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.nested_dictionaries
 #. def print_words(words):
@@ -14035,7 +14090,7 @@ msgstr "f\"---\""
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.eval_expr_inside_f_string
 #. f"2 * 3 + 4 is equal to {2 * 3 + 4}"
 msgid "code_bits.f\"2 * 3 + 4 is equal to {2 * 3 + 4}\""
-msgstr "f\"2 * 3 + 4 等于 {2 * 3 + 4}\""
+msgstr "f\"2 * 3 + 4 is equal to {2 * 3 + 4}\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.nested_dictionaries
 #. def print_words(words):
@@ -14056,7 +14111,7 @@ msgstr "f\"2 * 3 + 4 等于 {2 * 3 + 4}\""
 #.     },
 #. })
 msgid "code_bits.f\"English: {word}\""
-msgstr "f\"英语: {word}\""
+msgstr "f\"English: {word}\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.introducing_assert_equal.text
 #.     def assert_equal(actual, expected):
@@ -14065,7 +14120,7 @@ msgstr "f\"英语: {word}\""
 #.         else:
 #.             print(f"Error! {repr(actual)} != {repr(expected)}")
 msgid "code_bits.f\"Error! {repr(actual)} != {repr(expected)}\""
-msgstr "f\"错误! {repr(actual)} != {repr(expected)}\""
+msgstr "f\"Error! {repr(actual)} != {repr(expected)}\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DefiningFunctions.steps.change_function_name
 #. def say_hello(name):
@@ -14100,7 +14155,7 @@ msgstr "f\"错误! {repr(actual)} != {repr(expected)}\""
 #.         print(f"Hello {name}!")
 #.         print("How are you?")
 msgid "code_bits.f\"Hello {name}!\""
-msgstr "f\"你好 {name}!\""
+msgstr "f\"Hello {name}!\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DefiningFunctions.steps.change_parameter_name
 #. def say_hello(person_name):
@@ -14109,7 +14164,7 @@ msgstr "f\"你好 {name}!\""
 #. say_hello("Alice")
 #. say_hello("Bob")
 msgid "code_bits.f\"Hello {person_name}!\""
-msgstr "f\"你好 {person_name}!\""
+msgstr "f\"Hello {person_name}!\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.fix_broken_program
 #. people = ['Alice', 'Bob', 'Charlie']
@@ -14118,7 +14173,9 @@ msgstr "f\"你好 {person_name}!\""
 msgid ""
 "code_bits.f\"There are {len(people)} people waiting, the first one's name is"
 " {people[0]}.\""
-msgstr "f\"有 {len(people)} 个人在等待，第一个人的名字是 {people[0]}.\""
+msgstr ""
+"f\"There are {len(people)} people waiting, the first one's name is "
+"{people[0]}.\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.nested_dictionaries
 #. def print_words(words):
@@ -14173,7 +14230,7 @@ msgstr "f\"{letter} {number}\""
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.introduce_f_strings.text
 #.     print(f"{name} went to {meal} with {friend}.")
 msgid "code_bits.f\"{name} went to {meal} with {friend}.\""
-msgstr "f\"{name} 和 {friend} 一起去吃 {meal}.\""
+msgstr "f\"{name} went to {meal} with {friend}.\""
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -14276,14 +14333,14 @@ msgstr "f'  {\" \".join(str(i + 1) for i in range(size))}\\n{line.join(rows)}'"
 #. name = input()
 #. print(f'Hello {name}!')
 msgid "code_bits.f'Hello {name}!'"
-msgstr "f'你好 {name}!'"
+msgstr "f'Hello {name}!'"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.basic_f_string_exercise
 #. name = "Alice"
 #. age = 20
 #. print(f'Hello {name}. You are {age} years old.')
 msgid "code_bits.f'Hello {name}. You are {age} years old.'"
-msgstr "f'你好 {name}。你 {age} 岁。'"
+msgstr "f'Hello {name}. You are {age} years old.'"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -14512,7 +14569,7 @@ msgstr "f'{letter} {number}'"
 #.         if player1 != player2:
 #.             print(f'{player1} vs {player2}')
 msgid "code_bits.f'{player1} vs {player2}'"
-msgstr "f'{player1} 对 {player2}'"
+msgstr "f'{player1} vs {player2}'"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.final_text.text
 #.     players = ['Charlie', 'Alice', 'Dylan', 'Bob']
@@ -14528,7 +14585,7 @@ msgstr "f'{player1} 对 {player2}'"
 #.         if i < j:
 #.             print(f'{players[i]} vs {players[j]}')
 msgid "code_bits.f'{players[i]} vs {players[j]}'"
-msgstr "f'{players[i]} 对 {players[j]}'"
+msgstr "f'{players[i]} vs {players[j]}'"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -14622,7 +14679,7 @@ msgstr "f'{players[i]} 对 {players[j]}'"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.f'{player} to play:'"
-msgstr "f'{player} 进行游戏:'"
+msgstr "f'{player} to play:'"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -14716,7 +14773,7 @@ msgstr "f'{player} 进行游戏:'"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.f'{player} wins!'"
-msgstr "f'{player} 胜利了!'"
+msgstr "f'{player} wins!'"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNotPage.steps.NotPriority
 #. def invalid_image(filename):
@@ -14796,7 +14853,7 @@ msgstr "filename"
 #.         first = x3
 #. print(first)
 msgid "code_bits.first"
-msgstr "第一个"
+msgstr "first"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.nested_assignment_input.text
 #.     def format_board(board):
@@ -14836,7 +14893,7 @@ msgstr "第一个"
 #.         joined_rows.append(joined_row)
 #.     return "\n".join(joined_rows)
 msgid "code_bits.first_row"
-msgstr "第一行"
+msgstr "first_row"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MoreOnReturn.steps.break_vs_return
 #. def foo():
@@ -15098,7 +15155,7 @@ msgstr "format_board"
 #.         found = True
 #. print(found)
 msgid "code_bits.found"
-msgstr "找到"
+msgstr "found"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.english_to_french
 #. def print_words(french):
@@ -15143,7 +15200,7 @@ msgstr "找到"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingDictionaries.steps.first_dict
 #. french = {'apple': 'pomme', 'box': 'boite'}
 msgid "code_bits.french"
-msgstr "法语"
+msgstr "french"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.introduce_f_strings
 #. name = "Alice"
@@ -15160,7 +15217,7 @@ msgstr "法语"
 #.     meal = "lunch"
 #.     print(name + " went to " + meal + " with " + friend + '.')
 msgid "code_bits.friend"
-msgstr "朋友"
+msgstr "friend"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.modify_list_in_function
 #. def play_move(board, player):
@@ -15171,7 +15228,7 @@ msgstr "朋友"
 #.     print(game_board)
 #. play_game()
 msgid "code_bits.game_board"
-msgstr "游戏板"
+msgstr "game_board"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.english_to_german
 #. def print_words(french, german):
@@ -15189,7 +15246,7 @@ msgstr "游戏板"
 #.         {'apple': 'apfel', 'box': 'kasten'},
 #.     )
 msgid "code_bits.german"
-msgstr "德语"
+msgstr "german"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.OtherComparisonOperators.steps.grades_example
 #. percentage = 73
@@ -15203,7 +15260,7 @@ msgstr "德语"
 #.     grade = 'A'
 #. print(grade)
 msgid "code_bits.grade"
-msgstr "年级"
+msgstr "grade"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DefiningFunctions.steps.define_greet
 #. def greet(name):
@@ -15223,7 +15280,7 @@ msgstr "年级"
 #.         print(f"Hello {name}!")
 #.         print("How are you?")
 msgid "code_bits.greet"
-msgstr "问候"
+msgstr "greet"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.InteractiveProgramsWithInput.steps.convert_input_to_int
 #. super_secret_number = 7
@@ -15249,7 +15306,7 @@ msgstr "问候"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.InteractiveProgramsWithInput.steps.final_text.text
 #.     if int(guess) == super_secret_number:
 msgid "code_bits.guess"
-msgstr "猜测"
+msgstr "guess"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingUpStrings.steps.hello_plus_equals
 #. hello = 'Hello'
@@ -15265,7 +15322,7 @@ msgstr "猜测"
 #.     temp = hello + '!'
 #.     hello = temp
 msgid "code_bits.hello"
-msgstr "你好"
+msgstr "hello"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.UnderstandingProgramsWithSnoop.steps.print_first_character
 #. sentence = 'Hello there'
@@ -15297,7 +15354,7 @@ msgstr "你好"
 #.     include = True
 #. print(new_sentence)
 msgid "code_bits.include"
-msgstr "包含"
+msgstr "include"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.FunctionsAndMethodsForLists.steps.pop_predict_exercise.text
 #.     some_list.pop(index)
@@ -15311,7 +15368,7 @@ msgstr "包含"
 #.     print(index)
 #.     print(words[index])
 msgid "code_bits.index"
-msgstr "索引"
+msgstr "index"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPosition.steps.indices_out_of_bounds
 #. indices[4]
@@ -15323,7 +15380,7 @@ msgstr "索引"
 #. print(indices[2])
 #. print(indices[3])
 msgid "code_bits.indices"
-msgstr "索引"
+msgstr "indices"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.FunctionsAndMethodsForLists.steps.negative_index_concatenation_exercise.text
 #.     x = ['a', 'b', 'c']
@@ -15355,7 +15412,7 @@ msgstr "索引"
 #.     y = (insert_one_line_from_above)
 #.     print(y)
 msgid "code_bits.insert_one_line_from_above"
-msgstr "从上方插入一行"
+msgstr "insert_one_line_from_above"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNotPage.steps.NotPriority
 #. def invalid_image(filename):
@@ -15382,7 +15439,7 @@ msgstr "从上方插入一行"
 #.         return not filename.endswith(".png") and not
 #. filename.endswith(".jpg")
 msgid "code_bits.invalid_image"
-msgstr "无效图像"
+msgstr "invalid_image"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingOr.steps.ACommonMistake
 #. def is_friend(name):
@@ -15441,7 +15498,7 @@ msgstr "无效图像"
 #. print(name == "Alice" or
 #.       name == "Bob")
 msgid "code_bits.is_friend"
-msgstr "是朋友"
+msgstr "is_friend"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingAnd.steps.AndExercise
 #. def is_valid_percentage(x):
@@ -15491,7 +15548,7 @@ msgstr "是朋友"
 #.     assert_equal(is_valid_percentage(100), True)
 #.     assert_equal(is_valid_percentage(101), False)
 msgid "code_bits.is_valid_percentage"
-msgstr "是有效百分比"
+msgstr "is_valid_percentage"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -15567,7 +15624,7 @@ msgstr "是有效百分比"
 #.         500000010,
 #.     )
 msgid "code_bits.item"
-msgstr "项目"
+msgstr "item"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.nested_assignment_input.text
 #.     def format_board(board):
@@ -15607,7 +15664,7 @@ msgstr "项目"
 #.         joined_rows.append(joined_row)
 #.     return "\n".join(joined_rows)
 msgid "code_bits.joined_row"
-msgstr "合并行"
+msgstr "joined_row"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.nested_assignment_input.text
 #.     def format_board(board):
@@ -15665,7 +15722,7 @@ msgstr "合并行"
 #.         joined_rows.append(joined_row)
 #.     return "\n".join(joined_rows)
 msgid "code_bits.joined_rows"
-msgstr "合并行"
+msgstr "joined_rows"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.keys_are_iterable
 #. quantities = {'apple': 1, 'cat': 10}
@@ -15677,7 +15734,7 @@ msgstr "合并行"
 #. for key in quantities:
 #.     print(key)
 msgid "code_bits.key"
-msgstr "键"
+msgstr "key"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.nested_dictionaries
 #. def print_words(words):
@@ -15698,7 +15755,7 @@ msgstr "键"
 #.     },
 #. })
 msgid "code_bits.language"
-msgstr "语言"
+msgstr "language"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.times_table_exercise
 #. for left in range(12):
@@ -15708,7 +15765,7 @@ msgstr "语言"
 #.         print(f'{left} x {right} = {left * right}')
 #.     print('---')
 msgid "code_bits.left"
-msgstr "左"
+msgstr "left"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsTerminology.steps.len_of_none
 #. things = print([1, 2, 3])
@@ -15764,7 +15821,7 @@ msgstr "左"
 #.             line += string[i]
 #.     print(line)
 msgid "code_bits.length"
-msgstr "长度"
+msgstr "length"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPositionExercises.steps.zip_longest_exercise
 #. string1 = 'Goodbye'
@@ -15786,7 +15843,7 @@ msgstr "长度"
 #.         char2 = ' '
 #.     print(char1 + ' ' + char2)
 msgid "code_bits.length1"
-msgstr "长度1"
+msgstr "length1"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPositionExercises.steps.zip_longest_exercise
 #. string1 = 'Goodbye'
@@ -15808,7 +15865,7 @@ msgstr "长度1"
 #.         char2 = ' '
 #.     print(char1 + ' ' + char2)
 msgid "code_bits.length2"
-msgstr "长度2"
+msgstr "length2"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.LoopingOverNestedLists.steps.zip_longest_strings_exercise
 #. strings = ['abcqwe', 'def', 'ghiq']
@@ -15825,7 +15882,7 @@ msgstr "长度2"
 #.             line += string[i]
 #.     print(line)
 msgid "code_bits.lengths"
-msgstr "长度"
+msgstr "lengths"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingBirdseye.steps.birdseye_loop_example
 #. word = 'Amazing'
@@ -15871,7 +15928,7 @@ msgstr "长度"
 #.         result += d[letter]
 #.     return result
 msgid "code_bits.letter"
-msgstr "字母"
+msgstr "letter"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.crack_password_exercise
 #. letters = 'AB'
@@ -15884,7 +15941,7 @@ msgstr "字母"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.crack_password_exercise.text
 #.     letters = "ABCD"
 msgid "code_bits.letters"
-msgstr "字母"
+msgstr "letters"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.alert_exercise
 #. def surround(string, sides):
@@ -15898,7 +15955,7 @@ msgstr "字母"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.alert_exercise.text
 #.     def alert(string, level):
 msgid "code_bits.level"
-msgstr "级别"
+msgstr "level"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingUpStrings.steps.name_triangle
 #. name = 'World'
@@ -16112,7 +16169,7 @@ msgstr "级别"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.line"
-msgstr "行"
+msgstr "line"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NewlinesAndFormatBoard.steps.format_board_bonus_challenge
 #. def format_board(board):
@@ -16125,7 +16182,7 @@ msgstr "行"
 #.     line = f'\n{"+".join(lines)}\n'
 #.     return line.join(joined_rows)
 msgid "code_bits.lines"
-msgstr "行"
+msgstr "lines"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.EqualsVsIs.steps.final_text.text
 #.     list2 = list1.copy()
@@ -16152,7 +16209,7 @@ msgstr "行"
 #. print(list1)
 #. print(list2)
 msgid "code_bits.list1"
-msgstr "列表1"
+msgstr "list1"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.EqualsVsIs.steps.final_text.text
 #.     list2 = list1.copy()
@@ -16179,7 +16236,7 @@ msgstr "列表1"
 #. print(list1)
 #. print(list2)
 msgid "code_bits.list2"
-msgstr "列表2"
+msgstr "list2"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -16273,7 +16330,7 @@ msgstr "列表2"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.main_diagonal_winner"
-msgstr "主对角线赢家"
+msgstr "main_diagonal_winner"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MakingTheBoard.steps.final_text.text
 #.     def make_board(size):
@@ -16436,7 +16493,7 @@ msgstr "主对角线赢家"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.make_board"
-msgstr "制作棋盘"
+msgstr "make_board"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MakingTheBoard.steps.final_text.text
 #.     def make_board(size):
@@ -16463,7 +16520,7 @@ msgstr "制作棋盘"
 #.         print(cube[0][0] is cube[1][0])
 #.     test()
 msgid "code_bits.make_cube"
-msgstr "制作立方体"
+msgstr "make_cube"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.introduce_f_strings
 #. name = "Alice"
@@ -16480,7 +16537,7 @@ msgstr "制作立方体"
 #.     meal = "lunch"
 #.     print(name + " went to " + meal + " with " + friend + '.')
 msgid "code_bits.meal"
-msgstr "餐"
+msgstr "meal"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningAndAndOr.steps.AndHasHigherPriority
 #. def diagonal_winner(board):
@@ -16506,7 +16563,7 @@ msgstr "餐"
 #.                 (middle == board[0][2] and middle == board[2][0])
 #.         )
 msgid "code_bits.middle"
-msgstr "中间"
+msgstr "middle"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BasicForLoopExercises.steps.loop_exercise_1
 #. name = 'World'
@@ -16837,7 +16894,7 @@ msgstr "中间"
 #. word = 'Goodbye'
 #. print(word + ' ' + name)
 msgid "code_bits.name"
-msgstr "名称"
+msgstr "name"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheEqualityOperator.steps.if_equals_replacing_characters
 #. name = 'kesha'
@@ -16861,7 +16918,7 @@ msgstr "名称"
 #.     new_name += c
 #. print(new_name)
 msgid "code_bits.new_name"
-msgstr "新名称"
+msgstr "new_name"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingNewLists.steps.double_numbers.text
 #.     numbers = [1, 2] + [3, 4]
@@ -16871,7 +16928,7 @@ msgstr "新名称"
 #.     new_numbers += [5]
 #.     print(new_numbers)
 msgid "code_bits.new_numbers"
-msgstr "新数字"
+msgstr "new_numbers"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.FunctionsAndMethodsForLists.steps.append_vs_concatenate
 #. nums = [1, 2, 3]
@@ -16881,7 +16938,7 @@ msgstr "新数字"
 #. nums.append(4)
 #. print(nums)
 msgid "code_bits.new_nums"
-msgstr "新数字"
+msgstr "new_nums"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningCompoundStatements.steps.final_text.text
 #.     sentence = 'Hello World'
@@ -16975,12 +17032,12 @@ msgstr "新数字"
 #.     include = True
 #. print(new_sentence)
 msgid "code_bits.new_sentence"
-msgstr "新句子"
+msgstr "new_sentence"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.FunctionsAndMethodsForLists.steps.subscript_assignment_predict.text
 #.     some_list[index] = new_value
 msgid "code_bits.new_value"
-msgstr "新值"
+msgstr "new_value"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingLists.steps.strings_sum_bonus
 #. words = ['This', 'is', 'a', 'list']
@@ -16994,7 +17051,7 @@ msgstr "新值"
 #.     not_first = True
 #. print(total)
 msgid "code_bits.not_first"
-msgstr "不是第一个"
+msgstr "not_first"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.LoopingOverNestedLists.steps.nested_list_loop_python_tutor
 #. numbers = [[1, 2, 3], [4, 5], [6], []]
@@ -17016,7 +17073,7 @@ msgstr "不是第一个"
 #.             print(num)
 #.         print('---')
 msgid "code_bits.num"
-msgstr "数字"
+msgstr "num"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingNewLists.steps.double_numbers
 #. numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5]
@@ -17151,7 +17208,7 @@ msgstr "数字"
 #. print(small_numbers)
 #. print(big_numbers)
 msgid "code_bits.number"
-msgstr "数字"
+msgstr "number"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingNewLists.steps.double_numbers
 #. numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5]
@@ -17273,7 +17330,7 @@ msgstr "数字"
 #.         return doubles
 #.     assert_equal(double_numbers([1, 2, 3]), [2, 4, 6])
 msgid "code_bits.numbers"
-msgstr "数字"
+msgstr "numbers"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.FunctionsAndMethodsForLists.steps.append_vs_concatenate
 #. nums = [1, 2, 3]
@@ -17313,7 +17370,7 @@ msgstr "数字"
 #. print(7 in nums)
 #. print(2 in nums)
 msgid "code_bits.nums"
-msgstr "数字"
+msgstr "nums"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingElif.steps.dna_example
 #. dna = 'AGTAGCGTC'
@@ -17362,7 +17419,7 @@ msgstr "数字"
 #.     opposite_dna += char
 #. print(opposite_dna)
 msgid "code_bits.opposite_dna"
-msgstr "相反的DNA"
+msgstr "opposite_dna"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.UsingDictionaries.steps.dna_part1
 #. def substitute(string):
@@ -17390,14 +17447,14 @@ msgstr "相反的DNA"
 #.     assert_equal(substitute(original, {'A': 'T', 'T': 'A', 'C': 'G', 'G':
 #. 'C'}), expected)
 msgid "code_bits.original"
-msgstr "原始"
+msgstr "original"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingFstrings.steps.fix_broken_program
 #. people = ['Alice', 'Bob', 'Charlie']
 #. print(f"There are {len(people)} people waiting, the first one's name is
 #. {people[0]}.")
 msgid "code_bits.people"
-msgstr "人们"
+msgstr "people"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.OtherComparisonOperators.steps.grades_example
 #. percentage = 73
@@ -17411,7 +17468,7 @@ msgstr "人们"
 #.     grade = 'A'
 #. print(grade)
 msgid "code_bits.percentage"
-msgstr "百分比"
+msgstr "percentage"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DefiningFunctions.steps.change_parameter_name
 #. def say_hello(person_name):
@@ -17420,7 +17477,7 @@ msgstr "百分比"
 #. say_hello("Alice")
 #. say_hello("Bob")
 msgid "code_bits.person_name"
-msgstr "人名"
+msgstr "person_name"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.column_winner
 #. def column_winner(board):
@@ -17543,7 +17600,7 @@ msgstr "人名"
 #.         True
 #.     )
 msgid "code_bits.piece"
-msgstr "片"
+msgstr "piece"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.modify_list_in_function
 #. def play_move(board, player):
@@ -17687,7 +17744,7 @@ msgstr "片"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.play_game"
-msgstr "玩游戏"
+msgstr "play_game"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.modify_list_in_function
 #. def play_move(board, player):
@@ -17837,7 +17894,7 @@ msgstr "玩游戏"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.play_move"
-msgstr "移动"
+msgstr "play_move"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NestedListAssignment.steps.modify_list_in_function
 #. def play_move(board, player):
@@ -17994,7 +18051,7 @@ msgstr "移动"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.player"
-msgstr "玩家"
+msgstr "player"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.player_vs_player_exercise
 #. players = ['Alice', 'Bob', 'Charlie']
@@ -18095,7 +18152,7 @@ msgstr "玩家"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.player1"
-msgstr "玩家1"
+msgstr "player1"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.player_vs_player_exercise
 #. players = ['Alice', 'Bob', 'Charlie']
@@ -18196,7 +18253,7 @@ msgstr "玩家1"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.player2"
-msgstr "玩家2"
+msgstr "player2"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.final_text.text
 #.     players = ['Charlie', 'Alice', 'Dylan', 'Bob']
@@ -18225,7 +18282,7 @@ msgstr "玩家2"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.player_vs_player_exercise.text
 #.     players = ["Alice", "Bob", "Charlie"]
 msgid "code_bits.players"
-msgstr "玩家们"
+msgstr "players"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.LoopingOverNestedLists.steps.list_contains_word_exercise
 #. strings = [['hello there', 'how are you'], ['goodbye world', 'hello
@@ -18249,7 +18306,7 @@ msgstr "玩家们"
 #.             present = True
 #.     print(present)
 msgid "code_bits.present"
-msgstr "现在"
+msgstr "present"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -18325,7 +18382,7 @@ msgstr "现在"
 #.         500000010,
 #.     )
 msgid "code_bits.price"
-msgstr "价格"
+msgstr "price"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -18407,7 +18464,7 @@ msgstr "价格"
 #.         500000010,
 #.     )
 msgid "code_bits.prices"
-msgstr "价格"
+msgstr "prices"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.NewlinesAndFormatBoard.steps.invalid_multi_line_string.text
 #.     assert_equal(print_board([...]), "...")
@@ -18422,7 +18479,7 @@ msgstr "价格"
 #.     [' ', 'X', ' ']
 #. ])
 msgid "code_bits.print_board"
-msgstr "打印棋盘"
+msgstr "print_board"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -18516,7 +18573,7 @@ msgstr "打印棋盘"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.print_draw"
-msgstr "打印平局"
+msgstr "print_draw"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsWithinFunctions.steps.print_twice_call_print_many
 #. def print_many(n, thing):
@@ -18565,7 +18622,7 @@ msgstr "打印平局"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DefiningFunctions.steps.swap_parameters.text
 #.     def print_many(n, thing):
 msgid "code_bits.print_many"
-msgstr "打印多个"
+msgstr "print_many"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsWithinFunctions.steps.print_twice_call_print_many
 #. def print_many(n, thing):
@@ -18604,7 +18661,7 @@ msgstr "打印多个"
 #.     print(x)
 #.     print(x)
 msgid "code_bits.print_twice"
-msgstr "打印两次"
+msgstr "print_twice"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -18698,7 +18755,7 @@ msgstr "打印两次"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.print_winner"
-msgstr "打印赢家"
+msgstr "print_winner"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.english_to_french
 #. def print_words(french):
@@ -18747,7 +18804,7 @@ msgstr "打印赢家"
 #.     },
 #. })
 msgid "code_bits.print_words"
-msgstr "打印单词"
+msgstr "print_words"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsTerminology.steps.print_returns_none
 #. things = [1, 2, 3]
@@ -18755,7 +18812,7 @@ msgstr "打印单词"
 #. printed = print(length)
 #. print(printed)
 msgid "code_bits.printed"
-msgstr "已打印"
+msgstr "printed"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.ReturningValuesFromFunctions.steps.final_text.text
 #.     def quadruple(x):
@@ -18787,7 +18844,7 @@ msgstr "已打印"
 #.     assert_equal(quadruple(2))
 #.     assert_equal(quadruple(5))
 msgid "code_bits.quadruple"
-msgstr "四倍"
+msgstr "quadruple"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -18858,7 +18915,7 @@ msgstr "四倍"
 #.         500000010,
 #.     )
 msgid "code_bits.quantities"
-msgstr "数量"
+msgstr "quantities"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -18911,7 +18968,7 @@ msgstr "数量"
 #.         500000010,
 #.     )
 msgid "code_bits.quantity"
-msgstr "数量"
+msgstr "quantity"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -19032,7 +19089,7 @@ msgstr "数量"
 #.         500000010,
 #.     )
 msgid "code_bits.result"
-msgstr "结果"
+msgstr "result"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.times_table_exercise
 #. for left in range(12):
@@ -19042,7 +19099,7 @@ msgstr "结果"
 #.         print(f'{left} x {right} = {left * right}')
 #.     print('---')
 msgid "code_bits.right"
-msgstr "右"
+msgstr "right"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingAnd.steps.TicTacToeWinningRow
 #. def all_equal(row):
@@ -19408,7 +19465,7 @@ msgstr "右"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.row"
-msgstr "行"
+msgstr "row"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.intro_row_winner
 #. def row_winner(board):
@@ -19635,7 +19692,7 @@ msgstr "行"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.row_winner"
-msgstr "行赢家"
+msgstr "row_winner"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TheFullTicTacToeGame.steps.the_full_game
 #. def winning_line(strings):
@@ -19729,7 +19786,7 @@ msgstr "行赢家"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.rows"
-msgstr "行"
+msgstr "rows"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DefiningFunctions.steps.change_function_name
 #. def say_hello(name):
@@ -19745,7 +19802,7 @@ msgstr "行"
 #. say_hello("Alice")
 #. say_hello("Bob")
 msgid "code_bits.say_hello"
-msgstr "打招呼"
+msgstr "say_hello"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CombiningCompoundStatements.steps.final_text.text
 #.     sentence = 'Hello World'
@@ -19930,7 +19987,7 @@ msgstr "打招呼"
 #.     include = True
 #. print(new_sentence)
 msgid "code_bits.sentence"
-msgstr "句子"
+msgstr "sentence"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingLists.steps.strings_sum_bonus
 #. words = ['This', 'is', 'a', 'list']
@@ -19944,7 +20001,7 @@ msgstr "句子"
 #.     not_first = True
 #. print(total)
 msgid "code_bits.separator"
-msgstr "分隔符"
+msgstr "separator"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.alert_exercise
 #. def surround(string, sides):
@@ -19962,7 +20019,7 @@ msgstr "分隔符"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.surround_exercise.text
 #.     def surround(string, sides):
 msgid "code_bits.sides"
-msgstr "边"
+msgstr "sides"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLoops.steps.upside_down_triangle_exercise
 #. size = 3
@@ -20137,7 +20194,7 @@ msgstr "边"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.size"
-msgstr "大小"
+msgstr "size"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.UnderstandingProgramsWithPythonTutor.steps.run_with_python_tutor
 #. all_numbers = [2, 4, 8, 1, 9, 7]
@@ -20151,7 +20208,7 @@ msgstr "大小"
 #. print(small_numbers)
 #. print(big_numbers)
 msgid "code_bits.small_numbers"
-msgstr "小数字"
+msgstr "small_numbers"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingNewLists.steps.filter_numbers.text
 #.     some_list += [element]
@@ -20183,7 +20240,7 @@ msgstr "小数字"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MoreListFunctionsAndMethods.steps.sum_predict_exercise.text
 #.     sum(some_list)
 msgid "code_bits.some_list"
-msgstr "一些列表"
+msgstr "some_list"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingUpStringsExercises.steps.diagonal_name_bonus_challenge
 #. name = 'World'
@@ -20203,7 +20260,7 @@ msgstr "一些列表"
 #.     print(char + spaces + char)
 #. print(line)
 msgid "code_bits.spaces"
-msgstr "空间"
+msgstr "spaces"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLists.steps.double_subscripting.text
 #.     string = strings[1]
@@ -20323,7 +20380,7 @@ msgstr "空间"
 #.     assert_equal(substitute(original, {'A': 'T', 'T': 'A', 'C': 'G', 'G':
 #. 'C'}), expected)
 msgid "code_bits.string"
-msgstr "字符串"
+msgstr "string"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPositionExercises.steps.zip_exercise
 #. string1 = 'Hello'
@@ -20359,7 +20416,7 @@ msgstr "字符串"
 #.         char2 = string2[i]
 #.         print(char1 + ' ' + char2)
 msgid "code_bits.string1"
-msgstr "字符串1"
+msgstr "string1"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPositionExercises.steps.zip_exercise
 #. string1 = 'Hello'
@@ -20395,7 +20452,7 @@ msgstr "字符串1"
 #.         char2 = string2[i]
 #.         print(char1 + ' ' + char2)
 msgid "code_bits.string2"
-msgstr "字符串2"
+msgstr "string2"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNestedLists.steps.double_subscripting
 #. strings = ["abc", "def", "ghi"]
@@ -20710,7 +20767,7 @@ msgstr "字符串2"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.strings"
-msgstr "字符串"
+msgstr "strings"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.LoopingOverNestedLists.steps.list_contains_word_exercise
 #. strings = [['hello there', 'how are you'], ['goodbye world', 'hello
@@ -20763,7 +20820,7 @@ msgstr "字符串"
 #.             present = True
 #.     print(present)
 msgid "code_bits.sublist"
-msgstr "子列表"
+msgstr "sublist"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.UsingDictionaries.steps.dna_part1
 #. def substitute(string):
@@ -20798,12 +20855,12 @@ msgstr "子列表"
 #.     assert_equal(substitute(original, {'A': 'T', 'T': 'A', 'C': 'G', 'G':
 #. 'C'}), expected)
 msgid "code_bits.substitute"
-msgstr "替代"
+msgstr "substitute"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingVariables.steps.sunshine_undefined_check
 #. sunshine
 msgid "code_bits.sunshine"
-msgstr "阳光"
+msgstr "sunshine"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.InteractiveProgramsWithInput.steps.convert_input_to_int
 #. super_secret_number = 7
@@ -20829,7 +20886,7 @@ msgstr "阳光"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.InteractiveProgramsWithInput.steps.final_text.text
 #.     if int(guess) == super_secret_number:
 msgid "code_bits.super_secret_number"
-msgstr "超级秘密数字"
+msgstr "super_secret_number"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.alert_exercise
 #. def surround(string, sides):
@@ -20851,7 +20908,7 @@ msgstr "超级秘密数字"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.TestingFunctions.steps.surround_exercise.text
 #.     def surround(string, sides):
 msgid "code_bits.surround"
-msgstr "包围"
+msgstr "surround"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.BuildingUpStrings.steps.name_triangle.text
 #.     temp = hello
@@ -20861,7 +20918,7 @@ msgstr "包围"
 #.     temp = hello + '!'
 #.     hello = temp
 msgid "code_bits.temp"
-msgstr "临时"
+msgstr "temp"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MakingTheBoard.steps.final_text.text
 #.     def make_board(size):
@@ -20912,7 +20969,7 @@ msgstr "临时"
 #.     ])
 #. test()
 msgid "code_bits.test"
-msgstr "测试"
+msgstr "test"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsWithinFunctions.steps.print_twice_call_print_many
 #. def print_many(n, thing):
@@ -20989,7 +21046,7 @@ msgstr "测试"
 #.         found = True
 #. print(found)
 msgid "code_bits.thing"
-msgstr "物品"
+msgstr "thing"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.UsingBreak.steps.final_text.text
 #.     for thing in things:
@@ -21013,7 +21070,7 @@ msgstr "物品"
 #.         found = True
 #. print(found)
 msgid "code_bits.thing_to_find"
-msgstr "要找的东西"
+msgstr "thing_to_find"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsTerminology.steps.len_of_none
 #. things = print([1, 2, 3])
@@ -21060,7 +21117,7 @@ msgstr "要找的东西"
 #.         found = True
 #. print(found)
 msgid "code_bits.things"
-msgstr "物品"
+msgstr "things"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.GettingElementsAtPositionExercises.steps.index_exercise
 #. things = ['on', 'the', 'way', 'to', 'the', 'store']
@@ -21070,7 +21127,7 @@ msgstr "物品"
 #.         print(i)
 #.         break
 msgid "code_bits.to_find"
-msgstr "要找"
+msgstr "to_find"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.diagonal_winner
 #. def diagonal_winner(board):
@@ -21085,7 +21142,7 @@ msgstr "要找"
 #.             all_equal2 = False
 #.     return all_equal1 or all_equal2
 msgid "code_bits.topleft"
-msgstr "左上角"
+msgstr "topleft"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.diagonal_winner
 #. def diagonal_winner(board):
@@ -21100,7 +21157,7 @@ msgstr "左上角"
 #.             all_equal2 = False
 #.     return all_equal1 or all_equal2
 msgid "code_bits.topright"
-msgstr "右上角"
+msgstr "topright"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingLists.steps.numbers_sum
 #. numbers = [3, 1, 4, 1, 5, 9]
@@ -21128,7 +21185,7 @@ msgstr "右上角"
 #.     not_first = True
 #. print(total)
 msgid "code_bits.total"
-msgstr "总计"
+msgstr "total"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.cleanup_shopping_cart
 #. def total_cost(quantities, prices):
@@ -21204,7 +21261,7 @@ msgstr "总计"
 #.         500000010,
 #.     )
 msgid "code_bits.total_cost"
-msgstr "总成本"
+msgstr "total_cost"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.nested_dictionaries
 #. def print_words(words):
@@ -21225,7 +21282,7 @@ msgstr "总成本"
 #.     },
 #. })
 msgid "code_bits.translations"
-msgstr "翻译"
+msgstr "translations"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.ReturningValuesFromFunctions.steps.first_return
 #. def double(x):
@@ -21235,7 +21292,7 @@ msgstr "翻译"
 #. print(number)
 #. print(twice)
 msgid "code_bits.twice"
-msgstr "两次"
+msgstr "twice"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IfAndElse.steps.capitalise
 #. sentence = 'HELLO THERE'
@@ -21264,7 +21321,7 @@ msgstr "两次"
 #.     new_sentence += char
 #. print(new_sentence)
 msgid "code_bits.upper"
-msgstr "上"
+msgstr "upper"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingNotPage.steps.NotPriority.hints.0.text
 #.     def valid_image(filename):
@@ -21280,7 +21337,7 @@ msgstr "上"
 #.     def valid_image(filename):
 #.         return filename.endswith(".png") or filename.endswith(".jpg")
 msgid "code_bits.valid_image"
-msgstr "有效图像"
+msgstr "valid_image"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.FunctionsAndMethodsForLists.steps.index_predict_exercise.text
 #.     some_list.index(value)
@@ -21294,7 +21351,7 @@ msgstr "有效图像"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MoreListFunctionsAndMethods.steps.in_predict_exercise.text
 #.     value in some_list
 msgid "code_bits.value"
-msgstr "值"
+msgstr "value"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MoreOnReturn.steps.cannot_return_multiple_values.text
 #.     if condition:
@@ -21302,7 +21359,7 @@ msgstr "值"
 #.     else:
 #.         return value2
 msgid "code_bits.value1"
-msgstr "值1"
+msgstr "value1"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.MoreOnReturn.steps.cannot_return_multiple_values.text
 #.     if condition:
@@ -21310,7 +21367,7 @@ msgstr "值1"
 #.     else:
 #.         return value2
 msgid "code_bits.value2"
-msgstr "值2"
+msgstr "value2"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingBirdseye.steps.birdseye_loop_example
 #. word = 'Amazing'
@@ -21324,7 +21381,7 @@ msgstr "值2"
 #. print(vowels)
 #. print(consonants)
 msgid "code_bits.vowels"
-msgstr "元音"
+msgstr "vowels"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.winner
 #. def winning_line(strings):
@@ -21513,7 +21570,7 @@ msgstr "元音"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.winner"
-msgstr "胜利者"
+msgstr "winner"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.IntroducingTicTacToe.steps.winner
 #. def winning_line(strings):
@@ -21702,7 +21759,7 @@ msgstr "胜利者"
 #.         play_move(board, player2)
 #.     play_game(3, 'X', 'O')
 msgid "code_bits.winning_line"
-msgstr "胜利线"
+msgstr "winning_line"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.CallingFunctionsTerminology.steps.methods_of_str
 #. word = 'Hello'
@@ -21903,7 +21960,7 @@ msgstr "胜利线"
 #. word = 'Goodbye'
 #. print(word + ' ' + name)
 msgid "code_bits.word"
-msgstr "单词"
+msgstr "word"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.DictionaryKeysAndValues.steps.nested_dictionaries
 #. def print_words(words):
@@ -21956,7 +22013,7 @@ msgstr "单词"
 #.     not_first = True
 #. print(total)
 msgid "code_bits.words"
-msgstr "单词"
+msgstr "words"
 
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.OtherComparisonOperators.steps.final_text.text
 #.     first = x1
@@ -22123,7 +22180,7 @@ msgstr "x3"
 #. https://poeditor.com/projects/view_terms?id=490053&search=pages.UsingVariables.steps.word_plus_name_with_space
 #. word + ' ' + your_name
 msgid "code_bits.your_name"
-msgstr "你的名字"
+msgstr "your_name"
 
 msgid "frontend.are_you_sure"
 msgstr "你确定吗？"
