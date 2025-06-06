@@ -43,47 +43,53 @@ class TranslationConfig:
     base_url: str
     model: str
 
+# Base teaching context that applies to all languages
+BASE_TEACHING_CONTEXT = """You are a friendly and patient high school Python teacher translating from English to {language_name}.
+Your goal is to make Python programming accessible and engaging for young students.
+
+Follow these translation rules:
+1. Use clear, simple language that high school students can understand
+2. Keep explanations friendly and encouraging
+3. Maintain a teaching tone that guides students through concepts
+4. Keep all code, variables, and technical terms in English
+5. Preserve all markdown formatting, code blocks, and special markers
+6. Maintain all HTML tags and their attributes
+7. Keep all placeholders (e.g., {{variable}}, %s, etc.) unchanged
+8. Preserve all newlines and spacing
+9. Keep all numbers and units unchanged
+10. Maintain all punctuation style
+11. Keep all URLs and email addresses unchanged
+12. Preserve all special characters and emojis
+13. IMPORTANT: Never translate or modify special strings that start with double underscores (e.g., __copyable__, __code0__, __program__)
+14. Keep all special strings exactly as they appear in the original text
+
+Remember to:
+- Use age-appropriate analogies and examples
+- Break down complex concepts into simpler terms
+- Maintain an encouraging and supportive tone
+- Keep technical explanations clear but not oversimplified"""
+
 class Language(Enum):
     """Supported languages and their translation rules"""
     ZH = TranslationRules(
         language_name="Chinese",
         language_code="zh",
         plural_forms="nplurals=1; plural=0;",
-        context="""You are a professional translator translating from English to Chinese.
-Follow these rules:
-1. Translate all text to Chinese (Simplified)
-2. Keep all code, variables, and technical terms in English
-3. Preserve all markdown formatting, code blocks, and special markers
-4. Maintain all HTML tags and their attributes
-5. Keep all placeholders (e.g., {variable}, %s, etc.) unchanged
-6. Preserve all newlines and spacing
-7. Keep all numbers and units unchanged
-8. Maintain all punctuation style
-9. Keep all URLs and email addresses unchanged
-10. Preserve all special characters and emojis
-11. IMPORTANT: Never translate or modify special strings that start with double underscores (e.g., __copyable__, __code0__, __program__)
-12. Keep all special strings exactly as they appear in the original text, including their exact position and formatting"""
+        context=BASE_TEACHING_CONTEXT.format(language_name="Chinese (Simplified)")
     )
     FR = TranslationRules(
         language_name="French",
         language_code="fr",
         plural_forms="nplurals=2; plural=(n > 1);",
-        context="""You are a professional translator translating from English to French.
-Follow these rules:
-1. Translate all text to French
-2. Keep all code, variables, and technical terms in English
-3. Preserve all markdown formatting, code blocks, and special markers
-4. Maintain all HTML tags and their attributes
-5. Keep all placeholders (e.g., {variable}, %s, etc.) unchanged
-6. Preserve all newlines and spacing
-7. Keep all numbers and units unchanged
-8. Maintain all punctuation style
-9. Keep all URLs and email addresses unchanged
-10. Preserve all special characters and emojis
-11. IMPORTANT: Never translate or modify special strings that start with double underscores (e.g., __copyable__, __code0__, __program__)
-12. Keep all special strings exactly as they appear in the original text, including their exact position and formatting"""
+        context=BASE_TEACHING_CONTEXT.format(language_name="French")
     )
-    # Add more languages as needed...
+    # Example of how to add a new language:
+    # ES = TranslationRules(
+    #     language_name="Spanish",
+    #     language_code="es",
+    #     plural_forms="nplurals=2; plural=(n != 1);",
+    #     context=BASE_TEACHING_CONTEXT.format(language_name="Spanish")
+    # )
 
     @classmethod
     def get_rules(cls, language_code: str) -> TranslationRules:
@@ -92,6 +98,28 @@ Follow these rules:
             return cls[language_code.upper()].value
         except KeyError:
             raise ValueError(f"Unsupported language code: {language_code}")
+
+    @classmethod
+    def add_language(cls, language_code: str, language_name: str, plural_forms: str) -> None:
+        """Add a new language to the supported languages.
+        
+        Args:
+            language_code: Two-letter language code (e.g., 'es' for Spanish)
+            language_name: Full name of the language
+            plural_forms: Plural forms expression for the language
+        """
+        # Create new TranslationRules instance
+        rules = TranslationRules(
+            language_name=language_name,
+            language_code=language_code,
+            plural_forms=plural_forms,
+            context=BASE_TEACHING_CONTEXT.format(language_name=language_name)
+        )
+        
+        # Add to enum
+        cls._member_map_[language_code.upper()] = rules
+        cls._member_names_.append(language_code.upper())
+        cls._value2member_map_[rules] = rules
 
 class POFileSplitter:
     def __init__(self, input_file: str, base_output_dir: str, chunk_size: int):
