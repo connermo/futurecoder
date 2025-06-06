@@ -1,0 +1,635 @@
+import polib
+import json
+import os
+from pathlib import Path
+from typing import List, Dict, Any, Optional
+import requests
+from dataclasses import dataclass
+import time
+from concurrent.futures import ThreadPoolExecutor
+import re
+import argparse
+from enum import Enum
+from collections import defaultdict
+import logging
+import sys
+import glob
+from concurrent.futures import as_completed
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger(__name__)
+
+@dataclass
+class TranslationRules:
+    """Translation rules for a specific language"""
+    language_name: str
+    language_code: str
+    plural_forms: str
+    context: str
+
+@dataclass  
+class TranslationConfig:
+    """Configuration for translation service"""
+    api_key: str
+    base_url: str
+    model: str
+
+class Language(Enum):
+    """Supported languages and their translation rules"""
+    ZH = TranslationRules(
+        language_name="Chinese",
+        language_code="zh",
+        plural_forms="nplurals=1; plural=0;",
+        context="""You are a professional translator translating from English to Chinese.
+Follow these rules:
+1. Translate all text to Chinese (Simplified)
+2. Keep all code, variables, and technical terms in English
+3. Preserve all markdown formatting, code blocks, and special markers
+4. Maintain all HTML tags and their attributes
+5. Keep all placeholders (e.g., {variable}, %s, etc.) unchanged
+6. Preserve all newlines and spacing
+7. Keep all numbers and units unchanged
+8. Maintain all punctuation style
+9. Keep all URLs and email addresses unchanged
+10. Preserve all special characters and emojis"""
+    )
+    FR = TranslationRules(
+        language_name="French",
+        language_code="fr",
+        plural_forms="nplurals=2; plural=(n > 1);",
+        context="""You are a professional translator translating from English to French.
+Follow these rules:
+1. Translate all text to French
+2. Keep all code, variables, and technical terms in English
+3. Preserve all markdown formatting, code blocks, and special markers
+4. Maintain all HTML tags and their attributes
+5. Keep all placeholders (e.g., {variable}, %s, etc.) unchanged
+6. Preserve all newlines and spacing
+7. Keep all numbers and units unchanged
+8. Maintain all punctuation style
+9. Keep all URLs and email addresses unchanged
+10. Preserve all special characters and emojis"""
+    )
+    # Add more languages as needed...
+
+    @classmethod
+    def get_rules(cls, language_code: str) -> TranslationRules:
+        """Get translation rules for a language code."""
+        try:
+            return cls[language_code.upper()].value
+        except KeyError:
+            raise ValueError(f"Unsupported language code: {language_code}")
+
+class POFileSplitter:
+    def __init__(self, input_file: str, base_output_dir: str, chunk_size: int):
+        """Initialize the PO file splitter.
+        
+        Args:
+            input_file: Path to the input PO file
+            base_output_dir: Base directory for chunks (will create chunks/en/ subdirectory)
+            chunk_size: Maximum number of entries per chunk (for large chapters)
+        """
+        self.input_file = input_file
+        self.base_output_dir = Path(base_output_dir)
+        self.en_chunks_dir = self.base_output_dir / "chunks" / "en"
+        self.chunk_size = chunk_size
+        self.logger = logging.getLogger(__name__)
+        self.logger.info(f"Initializing POFileSplitter with input: {input_file}, output: {self.en_chunks_dir}, max chunk size: {chunk_size}")
+
+    def extract_chapter_name(self, msgid: str) -> str:
+        """Extract chapter name from msgid."""
+        # Handle different msgid patterns
+        if msgid.startswith('pages.'):
+            # Extract chapter from patterns like: pages.IntroducingNestedLoops.steps.crack_password_exercise.hints.0.text
+            parts = msgid.split('.')
+            if len(parts) >= 2:
+                return parts[1]  # IntroducingNestedLoops
+        elif msgid.startswith('frontend.'):
+            # Frontend UI elements
+            return 'frontend_ui'
+        elif 'hint' in msgid.lower():
+            # Hint-related entries
+            return 'hints'
+        elif 'code_bits.' in msgid:
+            # Code bits
+            return 'code_bits'
+        elif any(marker in msgid for marker in ['__program__', '__code', '__copyable__']):
+            # Special markers
+            return 'special_markers'
+        else:
+            # General/uncategorized entries
+            return 'general'
+
+    def split_entries(self) -> None:
+        """Split the PO file into chunks organized by chapters and save to chunks/en/."""
+        try:
+            # Load the PO file
+            self.logger.info(f"Loading PO file: {self.input_file}")
+            po_file = polib.pofile(self.input_file)
+            total_entries = len(po_file)
+            self.logger.info(f"Found {total_entries} entries to split")
+
+            # Group entries by chapter
+            chapters = defaultdict(list)
+            for entry in po_file:
+                chapter_name = self.extract_chapter_name(entry.msgid)
+                chapters[chapter_name].append(entry)
+
+            self.logger.info(f"Organized entries into {len(chapters)} chapters:")
+            for chapter, entries in chapters.items():
+                self.logger.info(f"  - {chapter}: {len(entries)} entries")
+
+            # Create English chunks directory
+            self.en_chunks_dir.mkdir(parents=True, exist_ok=True)
+            self.logger.info(f"Created English chunks directory: {self.en_chunks_dir}")
+
+            # Save each chapter as one or more chunks to en/ directory
+            chunk_count = 0
+            for chapter_name, entries in chapters.items():
+                # If chapter has too many entries, split into multiple chunks
+                if len(entries) <= self.chunk_size:
+                    # Single chunk for this chapter
+                    chunk_count += 1
+                    chunk_file = self.en_chunks_dir / f"{chapter_name}.po"
+                    self.save_chunk(entries, chunk_file, po_file.metadata)
+                    self.logger.info(f"Saved chapter '{chapter_name}' to {chunk_file}")
+                else:
+                    # Split large chapter into multiple chunks
+                    num_chunks = (len(entries) + self.chunk_size - 1) // self.chunk_size
+                    for i in range(num_chunks):
+                        start_idx = i * self.chunk_size
+                        end_idx = min((i + 1) * self.chunk_size, len(entries))
+                        chunk_entries = entries[start_idx:end_idx]
+                        
+                        chunk_count += 1
+                        chunk_file = self.en_chunks_dir / f"{chapter_name}_part{i+1:02d}.po"
+                        self.save_chunk(chunk_entries, chunk_file, po_file.metadata)
+                        self.logger.info(f"Saved chapter '{chapter_name}' part {i+1}/{num_chunks} to {chunk_file}")
+
+            self.logger.info(f"Successfully split PO file into {chunk_count} chapter-based chunks in {self.en_chunks_dir}")
+
+        except Exception as e:
+            self.logger.error(f"Error splitting PO file: {str(e)}")
+            raise
+
+    def save_chunk(self, entries: List[polib.POEntry], chunk_file: Path, metadata: dict):
+        """Save a chunk of entries to a PO file."""
+        chunk_po = polib.POFile()
+        chunk_po.metadata = metadata.copy()
+        chunk_po.extend(entries)
+        chunk_po.save(str(chunk_file))
+
+class Translator:
+    def __init__(self, config: TranslationConfig, language_code: str):
+        """Initialize the translator.
+        
+        Args:
+            config: Translation configuration
+            language_code: Language code to translate to
+        """
+        self.config = config
+        self.language_code = language_code
+        self.rules = Language.get_rules(language_code)
+        self.logger = logging.getLogger(__name__)
+        self.logger.info(f"Initialized translator for {self.rules.language_name}")
+        
+        # Initialize HTTP session
+        self.session = requests.Session()
+        self.session.headers.update({
+            "Authorization": f"Bearer {config.api_key}",
+            "Content-Type": "application/json"
+        })
+
+    def is_chunk_translated(self, chunk_file: str) -> bool:
+        """Check if a chunk file is already translated."""
+        try:
+            chunk = polib.pofile(chunk_file)
+            total_entries = len(chunk)
+            translated_entries = 0
+            
+            for entry in chunk:
+                if entry.msgstr and entry.msgstr.strip():
+                    translated_entries += 1
+                elif entry.msgstr_plural:
+                    # Check if any plural form is translated
+                    if any(msgstr.strip() for msgstr in entry.msgstr_plural.values()):
+                        translated_entries += 1
+            
+            # Consider chunk translated if at least 80% of entries are translated
+            translation_percentage = (translated_entries / total_entries) * 100 if total_entries > 0 else 0
+            is_translated = translation_percentage >= 80
+            
+            self.logger.debug(f"Chunk {os.path.basename(chunk_file)}: {translated_entries}/{total_entries} entries translated ({translation_percentage:.1f}%)")
+            
+            return is_translated
+            
+        except Exception as e:
+            self.logger.error(f"Error checking translation status of {chunk_file}: {str(e)}")
+            return False
+
+    def prepare_translation_request(self, chunk: polib.POFile) -> Dict:
+        """Prepare the translation request payload."""
+        # Convert PO entries to text format
+        entries_text = []
+        for entry in chunk:
+            entry_text = f"msgid: {entry.msgid}\nmsgstr: {entry.msgstr}\n"
+            if entry.msgid_plural:
+                entry_text += f"msgid_plural: {entry.msgid_plural}\n"
+                for i, msgstr in enumerate(entry.msgstr_plural.values()):
+                    entry_text += f"msgstr[{i}]: {msgstr}\n"
+            entries_text.append(entry_text)
+
+        # Combine all entries
+        text_to_translate = "\n\n".join(entries_text)
+        self.logger.debug(f"Prepared text to translate (first 100 chars): {text_to_translate[:100]}")
+
+        # Prepare the system message with rules
+        system_message = f"""You are a professional translator. Your task is to translate the following PO file entries from English to {self.rules.language_name}.
+
+{self.rules.context}
+
+The input will be in PO file format with msgid (English) and msgstr (translation) pairs.
+Only translate the text in the msgstr fields, keeping all other formatting, markers, and structure exactly as is.
+Return the translated text in the same PO file format."""
+
+        return {
+            "model": self.config.model,
+            "messages": [
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": text_to_translate}
+            ],
+            "temperature": 0.3
+        }
+
+    def translate_chunk(self, en_chunk_file: str, target_chunk_file: str) -> Optional[polib.POFile]:
+        """Translate a chunk from English to target language."""
+        try:
+            # Check if target chunk already exists and is translated
+            if os.path.exists(target_chunk_file) and self.is_chunk_translated(target_chunk_file):
+                self.logger.info(f"Skipping already translated chunk: {os.path.basename(target_chunk_file)}")
+                return polib.pofile(target_chunk_file)
+            
+            self.logger.info(f"Translating {os.path.basename(en_chunk_file)} → {os.path.basename(target_chunk_file)}")
+            
+            # Load the English chunk
+            self.logger.debug(f"Loading English chunk: {en_chunk_file}")
+            chunk = polib.pofile(en_chunk_file)
+            self.logger.debug(f"Loaded chunk with {len(chunk)} entries")
+
+            # Prepare translation request
+            payload = self.prepare_translation_request(chunk)
+            self.logger.debug("Prepared translation request")
+
+            # Make API call
+            self.logger.debug(f"Making API call to {self.config.base_url}")
+            response = self.session.post(self.config.base_url, json=payload)
+            
+            if response.status_code == 200:
+                result = response.json()
+                translated_text = result['choices'][0]['message']['content']
+                self.logger.debug(f"Received translation (first 100 chars): {translated_text[:100]}")
+                
+                # Parse the translated text and update the chunk
+                updated_chunk = self.parse_translated_text(translated_text, chunk)
+                
+                if updated_chunk:
+                    # Ensure target directory exists
+                    os.makedirs(os.path.dirname(target_chunk_file), exist_ok=True)
+                    # Save to target language directory
+                    updated_chunk.save(target_chunk_file)
+                    self.logger.info(f"Successfully translated and saved: {os.path.basename(target_chunk_file)}")
+                    return updated_chunk
+                else:
+                    self.logger.error(f"Failed to parse translated text for {en_chunk_file}")
+                    return None
+            else:
+                self.logger.error(f"API error {response.status_code}: {response.text}")
+                return None
+                
+        except Exception as e:
+            self.logger.error(f"Error translating chunk {en_chunk_file}: {str(e)}")
+            return None
+
+    def parse_translated_text(self, translated_text: str, original_chunk: polib.POFile) -> Optional[polib.POFile]:
+        """Parse the translated text and update the original chunk with translations."""
+        try:
+            self.logger.debug("Parsing translated text")
+            translated_lines = translated_text.split('\n')
+            current_entry = None
+            current_key = None
+
+            for line in translated_lines:
+                line = line.strip()
+                if not line:
+                    continue
+                    
+                if line.startswith('msgid: '):
+                    current_key = 'msgid'
+                    msgid = line[7:].strip()
+                    # Find the entry in the original chunk
+                    current_entry = original_chunk.find(msgid)
+                    if current_entry:
+                        self.logger.debug(f"Found entry for msgid: {msgid[:50]}...")
+                    else:
+                        self.logger.warning(f"Could not find entry for msgid: {msgid[:50]}...")
+                        
+                elif line.startswith('msgid_plural: '):
+                    current_key = 'msgid_plural'
+                    msgid_plural = line[14:].strip()
+                    if current_entry and current_entry.msgid_plural == msgid_plural:
+                        self.logger.debug(f"Found entry for msgid_plural: {msgid_plural[:50]}...")
+                        
+                elif line.startswith('msgstr: '):
+                    if current_entry and current_key == 'msgid':
+                        translation = line[8:].strip()
+                        if translation and translation != current_entry.msgid:  # Only update if actually translated
+                            current_entry.msgstr = translation
+                            self.logger.debug(f"Updated msgstr for entry: {current_entry.msgid[:50]}...")
+                            
+                elif line.startswith('msgstr[0]: '):
+                    if current_entry and current_key == 'msgid_plural':
+                        translation = line[11:].strip()
+                        if translation:
+                            current_entry.msgstr_plural[0] = translation
+                            self.logger.debug(f"Updated msgstr[0] for plural entry")
+                            
+                elif line.startswith('msgstr[1]: '):
+                    if current_entry and current_key == 'msgid_plural':
+                        translation = line[11:].strip()
+                        if translation:
+                            current_entry.msgstr_plural[1] = translation
+                            self.logger.debug(f"Updated msgstr[1] for plural entry")
+
+            self.logger.debug(f"Successfully parsed translated text")
+            return original_chunk
+
+        except Exception as e:
+            self.logger.error(f"Error parsing translated text: {str(e)}")
+            return None
+
+class TranslationMerger:
+    def __init__(self, chunks_dir: str, output_file: str, language_code: str):
+        self.chunks_dir = chunks_dir
+        self.output_file = output_file
+        self.language_code = language_code
+        self.logger = logging.getLogger(__name__)
+
+    def merge_translations(self) -> None:
+        """Merge translated chunks into a single PO file."""
+        self.logger.info(f"Starting merge process for {self.language_code}")
+        self.logger.info(f"Looking for chunks in: {self.chunks_dir}")
+        
+        # Create output directory if it doesn't exist
+        os.makedirs(os.path.dirname(os.path.abspath(self.output_file)), exist_ok=True)
+        
+        # Get all chunk files (now organized by chapter names)
+        chunk_files = sorted(glob.glob(os.path.join(self.chunks_dir, "*.po")))
+        if not chunk_files:
+            self.logger.error(f"No chunk files found in {self.chunks_dir}")
+            
+            # List all files in the directory for debugging
+            all_files = glob.glob(os.path.join(self.chunks_dir, "*"))
+            self.logger.info(f"All files found: {all_files}")
+            raise FileNotFoundError(f"No chunk files found in {self.chunks_dir}")
+        
+        self.logger.info(f"Found {len(chunk_files)} chapter-based chunk files to merge")
+        for f in chunk_files:
+            self.logger.info(f"  - {os.path.basename(f)}")
+
+        # Create new PO file with metadata from english.po
+        try:
+            english_po_path = os.path.join(os.path.dirname(self.output_file), "english.po")
+            self.logger.info(f"Reading metadata from: {english_po_path}")
+            english_po = polib.pofile(english_po_path)
+            merged_po = polib.POFile()
+            merged_po.metadata = english_po.metadata.copy()
+            merged_po.metadata['Language'] = self.language_code
+            
+            # Get language rules for plural forms
+            language_rules = Language.get_rules(self.language_code)
+            merged_po.metadata['Plural-Forms'] = language_rules.plural_forms
+        except Exception as e:
+            self.logger.error(f"Failed to read english.po: {str(e)}")
+            raise
+
+        # Track statistics
+        total_entries = 0
+        translated_entries = 0
+        skipped_entries = 0
+        
+        # Process each translated chunk
+        for chunk_file in chunk_files:
+            self.logger.info(f"Processing translated chunk: {chunk_file}")
+            try:
+                chunk_po = polib.pofile(chunk_file)
+                total_entries += len(chunk_po)
+                
+                for entry in chunk_po:
+                    if entry.msgstr and entry.msgstr.strip():  # Only include translated entries
+                        merged_po.append(entry)
+                        translated_entries += 1
+                    else:
+                        self.logger.warning(f"Skipping untranslated entry in {chunk_file}: {entry.msgid[:50]}...")
+                        skipped_entries += 1
+                        
+            except Exception as e:
+                self.logger.error(f"Error processing chunk {chunk_file}: {str(e)}")
+                raise
+        
+        # Save the merged file
+        try:
+            merged_po.save(self.output_file)
+            self.logger.info(f"Successfully merged translations to {self.output_file}")
+            self.logger.info(f"Statistics:")
+            self.logger.info(f"  Total entries: {total_entries}")
+            self.logger.info(f"  Translated entries: {translated_entries}")
+            self.logger.info(f"  Skipped entries: {skipped_entries}")
+            if total_entries > 0:
+                self.logger.info(f"  Translation coverage: {(translated_entries/total_entries)*100:.1f}%")
+        except Exception as e:
+            self.logger.error(f"Failed to save merged file: {str(e)}")
+            raise
+
+def validate_language_code(language_code: str) -> bool:
+    """Validate if the language code is supported"""
+    try:
+        Language(language_code)
+        return True
+    except ValueError:
+        return False
+
+def translate_all_chunks(translator: Translator, base_chunks_dir: str, language_code: str, max_workers: int = 3):
+    """Translate all chunks from chunks/en/ to chunks/{lang}/, skipping already translated ones."""
+    logger = logging.getLogger(__name__)
+    
+    en_chunks_dir = os.path.join(base_chunks_dir, "chunks", "en")
+    target_chunks_dir = os.path.join(base_chunks_dir, "chunks", language_code)
+    
+    # Get all English chunk files
+    en_chunk_files = sorted(glob.glob(os.path.join(en_chunks_dir, "*.po")))
+    if not en_chunk_files:
+        logger.error(f"No English chunk files found in {en_chunks_dir}")
+        return
+    
+    logger.info(f"Found {len(en_chunk_files)} English chunk files in {en_chunks_dir}")
+    logger.info(f"Will translate to {target_chunks_dir}")
+    
+    # Create target directory
+    os.makedirs(target_chunks_dir, exist_ok=True)
+    
+    # Check which chunks need translation
+    chunks_to_translate = []
+    already_translated = []
+    
+    for en_chunk_file in en_chunk_files:
+        chunk_name = os.path.basename(en_chunk_file)
+        target_chunk_file = os.path.join(target_chunks_dir, chunk_name)
+        
+        if os.path.exists(target_chunk_file) and translator.is_chunk_translated(target_chunk_file):
+            already_translated.append((en_chunk_file, target_chunk_file))
+        else:
+            chunks_to_translate.append((en_chunk_file, target_chunk_file))
+    
+    logger.info(f"Translation status:")
+    logger.info(f"  - Already translated: {len(already_translated)} chunks")
+    logger.info(f"  - Need translation: {len(chunks_to_translate)} chunks")
+    
+    if already_translated:
+        logger.info("Already translated chunks:")
+        for en_file, target_file in already_translated:
+            logger.info(f"  ✓ {os.path.basename(target_file)}")
+    
+    if not chunks_to_translate:
+        logger.info("All chunks are already translated! Skipping translation phase.")
+        return
+    
+    logger.info("Chunks to translate:")
+    for en_file, target_file in chunks_to_translate:
+        logger.info(f"  → {os.path.basename(en_file)} → {os.path.basename(target_file)}")
+    
+    # Translate only the chunks that need translation
+    logger.info(f"Starting translation of {len(chunks_to_translate)} chunks using {max_workers} workers...")
+    
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit translation tasks
+        future_to_chunk = {
+            executor.submit(translator.translate_chunk, en_file, target_file): (en_file, target_file)
+            for en_file, target_file in chunks_to_translate
+        }
+        
+        completed = 0
+        failed = 0
+        
+        # Process completed tasks
+        for future in as_completed(future_to_chunk):
+            en_file, target_file = future_to_chunk[future]
+            try:
+                result = future.result()
+                if result is not None:
+                    completed += 1
+                    logger.info(f"Progress: {completed + failed}/{len(chunks_to_translate)} - Completed: {os.path.basename(target_file)}")
+                else:
+                    failed += 1
+                    logger.error(f"Progress: {completed + failed}/{len(chunks_to_translate)} - Failed: {os.path.basename(target_file)}")
+            except Exception as e:
+                failed += 1
+                logger.error(f"Progress: {completed + failed}/{len(chunks_to_translate)} - Error: {str(e)}")
+        
+        logger.info(f"Translation completed: {completed} successful, {failed} failed")
+
+def main():
+    parser = argparse.ArgumentParser(description="Translate Futurecoder PO files")
+    parser.add_argument("-l", "--language", required=True, help="Language code (e.g., zh, fr, es)")
+    parser.add_argument("-k", "--api-key", required=True, help="API key for translation service")
+    parser.add_argument("--base-url", default="https://api.openai.com/v1/chat/completions",
+                      help="Base URL for the translation API")
+    parser.add_argument("-m", "--model", default="gpt-3.5-turbo",
+                      help="Model to use for translation")
+    parser.add_argument("-i", "--input", default="./english.po",
+                      help="Input PO file to translate")
+    parser.add_argument("-o", "--output-dir", default="./",
+                      help="Output directory for translated files")
+    parser.add_argument("--max-workers", type=int, default=5,
+                      help="Maximum number of parallel workers")
+    parser.add_argument("--chunk-size", type=int, default=50,
+                      help="Number of entries per chunk")
+    args = parser.parse_args()
+
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(f"translation_{args.language}.log"),
+            logging.StreamHandler(sys.stdout)
+        ]
+    )
+    logger = logging.getLogger(__name__)
+
+    try:
+        # Validate language code
+        try:
+            rules = Language.get_rules(args.language)
+            logger.info(f"Using translation rules for {rules.language_name}")
+        except ValueError as e:
+            logger.error(str(e))
+            logger.info("Supported languages: " + ", ".join(lang.value.language_name for lang in Language))
+            sys.exit(1)
+
+        # Create base chunks directory structure
+        base_chunks_dir = args.output_dir
+        en_chunks_dir = os.path.join(base_chunks_dir, "chunks", "en")
+        target_chunks_dir = os.path.join(base_chunks_dir, "chunks", args.language)
+        
+        logger.info(f"Directory structure:")
+        logger.info(f"  - English chunks: {en_chunks_dir}")
+        logger.info(f"  - Target chunks: {target_chunks_dir}")
+
+        # Initialize components
+        config = TranslationConfig(
+            api_key=args.api_key,
+            base_url=args.base_url,
+            model=args.model
+        )
+        
+        # Initialize splitter with base output directory
+        splitter = POFileSplitter(
+            input_file=args.input,
+            base_output_dir=base_chunks_dir,
+            chunk_size=args.chunk_size
+        )
+        translator = Translator(config, args.language)
+        merger = TranslationMerger(
+            chunks_dir=target_chunks_dir,
+            output_file=os.path.join(args.output_dir, f"{args.language}.po"),
+            language_code=args.language
+        )
+
+        # Split the file into English chunks
+        logger.info(f"Splitting PO file from: {args.input}")
+        splitter.split_entries()
+        
+        # Translate chunks from en/ to {lang}/
+        logger.info("Starting translation of chunks...")
+        translate_all_chunks(translator, base_chunks_dir, args.language, args.max_workers)
+        
+        # Merge translations from {lang}/ directory
+        logger.info(f"Merging translated chunks to: {merger.output_file}")
+        merger.merge_translations()
+        
+        logger.info("Translation process completed successfully!")
+        logger.info(f"Final output file: {os.path.abspath(merger.output_file)}")
+        
+    except Exception as e:
+        logger.error(f"Translation process failed: {str(e)}", exc_info=True)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
